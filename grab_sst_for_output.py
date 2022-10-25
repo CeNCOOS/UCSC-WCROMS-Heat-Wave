@@ -19,7 +19,7 @@ import pdb
 # Weird Bug here, but make sure to run this first
 import salem
 from shapely import geometry
-sanctuary_outline= salem.read_shapefile('./shapefiles/USMaritimeLimitsAndBoundariesSHP/USMaritimeLimitsNBoundaries.shp')
+sanctuary_outline= salem.read_shapefile('/home/flbahr/heat_content/shapefiles/USMaritimeLimitsAndBoundariesSHP/USMaritimeLimitsNBoundaries.shp')
 sanctuary_outline.crs = 'epsg:4326'
 #
 eez_shape = sanctuary_outline[(sanctuary_outline['REGION'] == "Pacific Coast") & (sanctuary_outline['EEZ'])]
@@ -202,17 +202,18 @@ the_time=roms_time
 the_time.values
 the_heat=the_heat.squeeze()
 the_heat.drop('s_rho')
+[nt,la,lo]=the_heat.shape
 x1=the_heat[0:2092,:,:].values
 x2=the_heat[2092:,:,].values
 x=np.append(x1,x2,axis=0)
 
 from netCDF4 import Dataset
-fname = "West_Coast_Temperature_surface_1d.nc"
+fname = "/home/flbahr/heat_content/West_Coast_Temperature_surface_1d.nc"
 ncfile=Dataset(fname,mode='w',format='NETCDF4_CLASSIC')
 lat_dim=ncfile.createDimension('lat',175)
 lon_dim=ncfile.createDimension('lon',117)
-time_dim=ncfile.createDimension('time',4232)
-#ncfile.title("West Coast Upper SST - 0 meters")
+time_dim=ncfile.createDimension('time',nt)
+##ncfile.title("West Coast Upper SST - 0 meters")
 lat=ncfile.createVariable('lat',np.float32,('lat',))
 lat.units='degrees_north'
 lat.long_name='latitude'
@@ -228,19 +229,27 @@ time[:]=the_time.values
 temp[:,:,:]=x
 #
 data = x
-#data = the_heat
+##data = the_heat
 time = the_time
 longitude = westcoast_temp.longitude.values
 latitude = westcoast_temp.latitude.values
 dims=['time','lat','lon']
-#dims = ['lat', 'lon','time']
+##dims = ['lat', 'lon','time']
+#ds = xr.Dataset(coords={"time":time,
+#                        "lon": longitude,
+#                        "lat": latitude,
+#                        })
 ds = xr.Dataset({'temperature_surface': (dims,x)},
-                coords={"time":time,
-                        "lon": longitude,
-                        "lat": latitude,
-                        })
+                coords={'lon':longitude,
+                        'lat':latitude,
+                        'time':time,})
+#ds = xr.Dataset({'temperature_surface': (dims,x)},
+#                coords={"time":time,
+#                        "lon": longitude,
+#                        "lat": latitude,
+#                        })
 ds.attrs['title'] = "West Coast Upper SST - 0 meters"
 ds.attrs['notes'] = "Created on "+dt.datetime.today().strftime("%Y-%m-%d") + " by flbahr"
 #
-fname = "West_Coast_Temperature_surface_2_20220809.nc"
+fname = "/home/flbahr/heat_content/West_Coast_Temperature_surface_present.nc"
 ds.to_netcdf(path=fname)

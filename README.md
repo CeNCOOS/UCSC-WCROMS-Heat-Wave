@@ -2,6 +2,9 @@
 This is code to use the hobday heatwave criteria as implemented by Eric. C. J. Oliver using a 31 year ROMS climatology with WCOFS model output.
 The idea is to use the WCOFS ocean model to create a 3-day forecast of heatwave conditions off the US West Coast.  This particular code uses the SST data.
 
+Note data files have not been upload to github except the shapefile below.  The yearly files containing daily values can be created using several of the programs
+below.
+
 # File and descriptions:
 ``` USMaritimeLimitsNBoundaries.shp ``` A shape file used to truncate model domain data to the US West coast
 

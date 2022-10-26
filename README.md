@@ -31,15 +31,33 @@ an error in the plotting routines.
 ``` merge_heat.ipynb ``` Python notebook exploring how to merge data from 31 year UCSC ROMS and UCSC ROMS NRT.  The data are the upper ocean heat content.
 The data are used to compute the marine heatwave and then output into pickle files.
 
+``` merge_sst.ipynb ``` Python notebook to do the same as above but using sst data instead of heat content data.
 
+``` set_depth.py ``` Python code from ROMS for computing depths from sigma coordinates
 
+``` setup_heatwave.py ``` Eric C.J. Oliver's code for setting up the marine heatwave code
 
+``` stretching.py ``` Python code from ROMS using in the depth computation from sigma coordinates.
 
+``` truncate_wcofs.py ``` Code to truncate WCOFS to the domain of interest, used only on archived data files.
 
+``` wcof_heatcontent.py ``` Code only using WCOFS data to compute 100m upper ocean heat content
+
+``` wcof_load.py ``` Initial code to load WCOFS data but doesn't take into account weird timing with WCOFS output files.
+
+``` wcof_merge_data.py ``` Code to merge test output from python pickle files and create a NetCDF file.
+
+``` wcof_sst_output.py ``` Code to test merging files and outputing not used by the above.
+
+``` wcofs_compare.py ``` Code for comparing some of the WCOFS files from nowcast vs forecast.  Not used above.
+
+``` wcofs_lonlat_2_xy.py ``` Code from Alexander Kuropov (author of WCOFS) to regrid local coordinats.  Ultimately wasn't used with the heatwave code above.
 
 ### References
 Hobday, A.J. et al. (2016), A hierarchical approach to defining marine heatwaves, Progress in Oceanography, 141, pp. 227-238, doi: 10.1016/j.pocean.2015.12.014 pdf
 
 ### Heatwave computation code:
+Eric C. J. Oliver's implementation of the Hobday heatwave criteria:
+
 https://github.com/ecjoliver/marineHeatWaves
 

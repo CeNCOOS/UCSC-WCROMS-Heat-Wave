@@ -20,7 +20,16 @@ The idea is to use the WCOFS ocean model to create a 3-day forecast of heatwave 
 ``` heat_wave_run_with_climate_sst_WCOFS.py ``` Code to compute MHW from the UCSC ROMS 31 year reanalysis run, with the UCSC ROMS NRT model run and the WCOFS runs for 2021 to the present with the forecast from WCOFS.  The output is stored as python pickle files to seperate steps and prevent having to run the code again if there was
 an error in the plotting routines.
 
+``` heatwave_to_netcdf.ipynb ``` Python notebook to take heatwave output computed from upper ocean heat content pickle files and write a NetCDF file.
 
+``` heatwave_to_netcdf_sst.ipynb ``` Python notebook to take heatwave computed from SST and write and NetCDF file.
+
+``` load_wcofs_for_heatwave.py ``` Load the current WCOFS output up to the present and then also load the forecast data for use with the heatwave code.
+
+``` marineHeatWave.py ``` Eric C. J. Oliver's heatwave computation code base on the Hobday definition.  See below for link to his code
+
+``` merge_heat.ipynb ``` Python notebook exploring how to merge data from 31 year UCSC ROMS and UCSC ROMS NRT.  The data are the upper ocean heat content.
+The data are used to compute the marine heatwave and then output into pickle files.
 
 
 
